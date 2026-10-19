@@ -1,0 +1,33 @@
+version: 2
+
+models:
+  - name: review_signals
+    description: "Analytical model with engagement, paywall, churn, and intent signals per review."
+    columns:
+      - name: rating
+        description: "1-5 star rating, normalized across platforms."
+        tests:
+          - not_null
+          - accepted_values:
+              values: [1, 2, 3, 4, 5]
+
+      - name: platform
+        description: "Source platform of the review."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['android', 'ios']
+
+      - name: rating_bucket
+        description: "NPS-style grouping derived from rating."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['detractor', 'neutral', 'promoter']
+
+      - name: intent_segment
+        description: "User intent classification from review text."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['engaged-free', 'converted-happy', 'churned', 'casual']
